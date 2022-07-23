@@ -25,6 +25,9 @@ public class ProductMergingService {
     }
 
 
+    //this should retrieve sensors from sensor_information table
+    //todo: add corresponding entity/repo/service for managing sensors
+    //todo: add sensor_type table and store types there (stored in enum in data-emulator only for now)
     public List<String> getSensors(){
         logger.info("Sensors: {}", productService.getAllSensors());
 
