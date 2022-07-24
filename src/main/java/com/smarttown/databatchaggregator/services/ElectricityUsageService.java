@@ -12,25 +12,27 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ElectricityUsageService implements ProductService {
 
     private final ElectricityUsageRepository usageRepository;
     private final ElectricityUsageMergedRepository usageMergedRepository;
+    private final SensorService sensorService;
     private final ModelMapper mapper;
 
     public ElectricityUsageService(ElectricityUsageRepository usageRepository,
                                    ElectricityUsageMergedRepository usageMergedRepository,
+                                   SensorService sensorService,
                                    ModelMapper mapper){
         this.usageRepository = usageRepository;
         this.usageMergedRepository = usageMergedRepository;
+        this.sensorService = sensorService;
         this.mapper = mapper;
     }
 
     public List<String> getAllSensors(){
-        return usageMergedRepository.findAll().stream().map(ElectricityUsageSensorMerged::getSensorId).distinct().collect(Collectors.toList());
+        return sensorService.getSensorsByType("electricity_usage");
     }
 
     public ProductEntity mergeDataForPeriod(Date startDate, Date endDate, String sensorId){

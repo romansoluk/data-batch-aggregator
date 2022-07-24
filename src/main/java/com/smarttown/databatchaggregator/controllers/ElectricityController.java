@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("electricity")
 public class ElectricityController {
 
 
@@ -41,6 +43,7 @@ public class ElectricityController {
         List<String> ids = mergingService.getSensors();
 
         //time format 2022-07-23T09:27:30
+        // todo: Sun Jul 24 04:22:47 EEST 2022 - date from mongo -> 2022-07-24T16:22:47  current date
         Date date = DateUtils.convertToDateViaInstant(LocalDateTime.parse(mergingRequestDto.getStartDate()));
         Integer periodToMerge = mergingRequestDto.getPeriodToMerge();
         

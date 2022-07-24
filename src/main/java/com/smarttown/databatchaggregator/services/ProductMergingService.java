@@ -17,17 +17,17 @@ public class ProductMergingService {
 
     Logger logger = LoggerFactory.getLogger(ProductMergingService.class);
     private final ProductService productService;
-    ElectricityUsageRepository repository;
+    ElectricityUsageRepository repository; //this is not needed - been using only for displaying data in logs
 
     public ProductMergingService(ProductService productService, ElectricityUsageRepository repository) {
         this.productService = productService;
         this.repository = repository;
     }
 
-
-    //this should retrieve sensors from sensor_information table
-    //todo: add corresponding entity/repo/service for managing sensors
-    //todo: add sensor_type table and store types there (stored in enum in data-emulator only for now)
+    /**
+     *
+     * @return list of sensors ids for specific product
+     */
     public List<String> getSensors(){
         logger.info("Sensors: {}", productService.getAllSensors());
 
@@ -47,6 +47,12 @@ public class ProductMergingService {
 
     }
 
+    /**
+     *
+     * @param periodToMerge - interval in minutes to merge data into single record
+     * @param startDate  - start date of merging
+     * @param sensorId  - sensor id
+     */
     public void merge(Integer periodToMerge, Date startDate, String sensorId) {
 
         LocalDateTime mergeFrom = DateUtils.convertToLocalDateViaInstant(startDate);
@@ -57,6 +63,12 @@ public class ProductMergingService {
 
     }
 
+    /**
+     *
+     * @param periodToMerge - interval in minutes to merge data into single record
+     * @param startDate  - start date of merging     * @param sensorList
+     * @param sensorList - list of sensors
+     */
     public void merge(Integer periodToMerge, Date startDate, List<String> sensorList) {
 
         for (String sensorId : sensorList) {
